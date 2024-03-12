@@ -18,8 +18,9 @@ export default function Main() {
         <Route path="/about" element={<About />}></Route>
         <Route path="/Sign-up" element={<SignUp />}></Route>
         <Route path="/Sign-in" element={<SignIn />}></Route>
-        <Route element={<PrivateRoute />}></Route>
-        <Route path="/dashboard" element={<Dashboard />}></Route>
+        <Route element={<PrivateRoute />}>
+          <Route path="/dashboard" element={<Dashboard />} />
+        </Route>
         <Route path="/projects" element={<Projects />}></Route>
       </Routes>
       <Footer />
