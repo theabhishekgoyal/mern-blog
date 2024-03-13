@@ -58,6 +58,7 @@ export default function CreatePost() {
       console.log(error);
     }
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -68,15 +69,20 @@ export default function CreatePost() {
         },
         body: JSON.stringify(formData),
       });
-      const data = await res.json();
+      let data = await res.json();
+      data = data.post;
       if (!res.ok) {
         setPublishError(data.message);
         return;
       }
 
-      if (res.ok) {
+      // Check if 'slug' is present in the response data
+      if (data.slug) {
         setPublishError(null);
         navigate(`/post/${data.slug}`);
+      } else {
+        // Set an error message if 'slug' is undefined
+        setPublishError("Slug is undefined");
       }
     } catch (error) {
       setPublishError("Something went wrong");
