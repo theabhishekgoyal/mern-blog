@@ -25,7 +25,7 @@ import { app } from "../firebase";
 import { useDispatch } from "react-redux";
 
 export default function DashProfile() {
-  const { currentUser, error, loading } = useSelector((state) => state.user);
+  const { currentUser, error } = useSelector((state) => state.user);
   const [imageFile, setImageFile] = useState(null);
   const [imageFileUrl, setImageFileUrl] = useState(null);
   const [imageFileUploadProgress, setImageFileUploadProgress] = useState(null);
@@ -246,9 +246,9 @@ export default function DashProfile() {
           type="submit"
           gradientDuoTone="purpleToBlue"
           outline
-          disabled={loading || imageFileUploading}
+          // disabled={loading || imageFileUploading}
         >
-          {loading ? "Loading..." : "Update"}
+          Update
         </Button>
         {currentUser.isAdmin && (
           <Link to={"/create-post"}>
