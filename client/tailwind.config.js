@@ -8,5 +8,5 @@ export default {
   theme: {
     extend: {},
   },
-  plugins: ["flowbite/plugin", "tailwind-scrollbar"],
+  plugins: ["flowbite/plugin", "tailwind-scrollbar", "tailwind-clamp"],
 };
