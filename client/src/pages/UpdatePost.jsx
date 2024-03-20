@@ -19,6 +19,7 @@ export default function UpdatePost() {
   const [imageUploadProgress, setImageUploadProgress] = useState(null);
   const [imageUploadError, setImageUploadError] = useState(null);
   const [formData, setFormData] = useState({});
+  const [content, setContent] = useState("");
   const [publishError, setPublishError] = useState(null);
   const { postId } = useParams();
   const navigate = useNavigate();
@@ -35,8 +36,11 @@ export default function UpdatePost() {
           return;
         }
         if (res.ok) {
+          console.log(data.posts[0]);
           setPublishError(null);
           setFormData(data.posts[0]);
+          setContent(data.posts[0]?.content ?? "");
+          console.log(data.posts[0]._id);
         }
       };
 
@@ -87,7 +91,10 @@ export default function UpdatePost() {
     e.preventDefault();
 
     try {
-      console.log(formData._id);
+      console.log(formData);
+      const obj = structuredClone(formData);
+      obj.content = content;
+      console.log(obj);
       const res = await fetch(
         `/api/post/updatepost/${formData._id}/${currentUser._id}`,
         {
@@ -95,7 +102,7 @@ export default function UpdatePost() {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(formData),
+          body: JSON.stringify(obj),
         }
       );
       let data = await res.json();
@@ -175,12 +182,12 @@ export default function UpdatePost() {
         )}
         <ReactQuill
           theme="snow"
-          value={formData.content}
+          value={content}
           placeholder="Write something..."
           className="h-72 mb-12"
           required
           onChange={(value) => {
-            setFormData({ ...formData, content: value });
+            setContent(value);
           }}
         />
         <Button type="submit" gradientDuoTone="purpleToPink">
