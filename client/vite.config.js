@@ -6,7 +6,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "https://goyalblogs-api.onrender.com",
+        target: "https://localhost:3000",
         secure: false,
       },
     },
