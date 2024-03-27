@@ -17,7 +17,12 @@ mongoose.connect(process.env.MONGO).then(() => {
 dotenv.config();
 
 const app = express();
-app.use(cors());
+app.use(
+  cors({
+    origin: "*",
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(cookieParser());
 
