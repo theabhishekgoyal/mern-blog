@@ -13,7 +13,7 @@ export default function Comment({ comment, onLike, onEdit, onDelete }) {
   useEffect(() => {
     const getUser = async () => {
       try {
-        const res = await fetch(`https://goyalblogs-api.onrender.com/api/user/${comment.userId}`);
+        const res = await fetch(`/api/user/${comment.userId}`);
         const data = await res.json();
         if (res.ok) {
           setUser(data);

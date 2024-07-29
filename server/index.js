@@ -8,20 +8,20 @@ import cookieParser from "cookie-parser";
 import postRoutes from "./routes/post.route.js";
 import commentRoutes from "./routes/comment.route.js";
 import path from "path";
-import { config } from "dotenv";
-config();
+dotenv.config();
+const app = express();
+
+
 mongoose.connect(process.env.MONGO).then(() => {
   console.log("mongodb is connected");
   // console.log(process.env.MONGO);
 });
-dotenv.config();
 
-const app = express();
 app.use(
   cors({
     origin: "*",
     credentials: true,
-    methods:['GET', 'POST', 'PUT', 'DELETE'];
+    methods: ["GET", "POST", "PUT", "DELETE"],
   })
 );
 app.use(express.json());
