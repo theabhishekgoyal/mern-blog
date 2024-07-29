@@ -1,4 +1,4 @@
-import Comment from "../models/comment.model.js";
+import Comment from '../models/comment.model.js';
 
 export const createComment = async (req, res, next) => {
   try {
@@ -6,7 +6,7 @@ export const createComment = async (req, res, next) => {
 
     if (userId !== req.user.id) {
       return next(
-        errorHandler(403, "You are not allowed to create this comment")
+        errorHandler(403, 'You are not allowed to create this comment')
       );
     }
 
@@ -22,6 +22,7 @@ export const createComment = async (req, res, next) => {
     next(error);
   }
 };
+
 export const getPostComments = async (req, res, next) => {
   try {
     const comments = await Comment.find({ postId: req.params.postId }).sort({
@@ -33,53 +34,11 @@ export const getPostComments = async (req, res, next) => {
   }
 };
 
-export const getUsers = async (req, res, next) => {
-  if (!req.user.isAdmin) {
-    return next(errorHandler(403, "You are not allowed to see all users"));
-  }
-  try {
-    const startIndex = parseInt(req.query.startIndex) || 0;
-    const limit = parseInt(req.query.limit) || 9;
-    const sortDirection = req.query.sort === "asc" ? 1 : -1;
-
-    const users = await User.find()
-      .sort({ createdAt: sortDirection })
-      .skip(startIndex)
-      .limit(limit);
-
-    const usersWithoutPassword = users.map((user) => {
-      const { password, ...rest } = user._doc;
-      return rest;
-    });
-
-    const totalUsers = await User.countDocuments();
-
-    const now = new Date();
-
-    const oneMonthAgo = new Date(
-      now.getFullYear(),
-      now.getMonth() - 1,
-      now.getDate()
-    );
-    const lastMonthUsers = await User.countDocuments({
-      createdAt: { $gte: oneMonthAgo },
-    });
-
-    res.status(200).json({
-      users: usersWithoutPassword,
-      totalUsers,
-      lastMonthUsers,
-    });
-  } catch (error) {
-    next(error);
-  }
-};
-
 export const likeComment = async (req, res, next) => {
   try {
     const comment = await Comment.findById(req.params.commentId);
     if (!comment) {
-      return next(errorHandler(404, "Comment not found"));
+      return next(errorHandler(404, 'Comment not found'));
     }
     const userIndex = comment.likes.indexOf(req.user.id);
     if (userIndex === -1) {

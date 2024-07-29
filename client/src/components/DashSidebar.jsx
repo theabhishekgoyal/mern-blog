@@ -12,7 +12,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { signoutSuccess } from '../redux/user/userSlice';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-// import { signoutSuccess } from '../redux/user/userSlice';
+
 export default function DashSidebar() {
   const location = useLocation();
   const dispatch = useDispatch();
@@ -27,8 +27,8 @@ export default function DashSidebar() {
   }, [location.search]);
   const handleSignout = async () => {
     try {
-      const res = await fetch(`https://goyalblogs-api.onrender.com/api/user/signout`, {
-        method: "POST",
+      const res = await fetch('/api/user/signout', {
+        method: 'POST',
       });
       const data = await res.json();
       if (!res.ok) {
@@ -36,8 +36,8 @@ export default function DashSidebar() {
       } else {
         dispatch(signoutSuccess());
       }
-    } catch (err) {
-      console.log(err.message);
+    } catch (error) {
+      console.log(error.message);
     }
   };
   return (
