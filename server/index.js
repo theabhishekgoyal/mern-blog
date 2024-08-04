@@ -42,13 +42,13 @@ app.use('/api/auth', authRoutes);
 app.use('/api/post', postRoutes);
 app.use('/api/comment', commentRoutes);
 
-// Static files and SPA fallback
-const __dirname = path.resolve();
-app.use(express.static(path.join(__dirname, 'client', 'dist')));
+// // Static files and SPA fallback
+// const __dirname = path.resolve();
+// app.use(express.static(path.join(__dirname, 'client', 'dist')));
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
-});
+// app.get('*', (req, res) => {
+//   res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
+// });
 
 // Error handling middleware
 app.use((err, req, res, next) => {

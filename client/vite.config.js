@@ -6,7 +6,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        // target: 'https://mern-blog-oqtm.onrender.com',
+        // target: 'https://goyalblogs-api.vercel.app/',
         target: 'http://localhost:3000',
         secure: false,
       },
