@@ -27,7 +27,7 @@ mongoose
 
 // Configure CORS
 app.use(cors({
-  origin: 'https://goyalblog.vercel.app/', // Adjust this based on your requirements
+  origin: 'https://goyalblog.vercel.app', // Adjust this based on your requirements
   methods: ['GET', 'POST', 'PUT', 'DELETE'], // Include all necessary HTTP methods
   credentials: true,
 }));
