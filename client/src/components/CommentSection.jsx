@@ -22,6 +22,7 @@ export default function CommentSection({ postId }) {
       const res = await fetch('https://goyalblogs-api.vercel.app/api/comment/create', {
         method: 'POST',
         headers: {
+          credentials: 'include',
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({

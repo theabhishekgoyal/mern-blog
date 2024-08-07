@@ -33,6 +33,7 @@ export default function Comment({ comment, onLike, onEdit, onDelete }) {
     try {
       const res = await fetch(`https://goyalblogs-api.vercel.app/api/comment/editComment/${comment._id}`, {
         method: 'PUT',
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
         },
