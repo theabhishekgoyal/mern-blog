@@ -50,7 +50,7 @@ export default function DashboardComp() {
     const fetchComments = async () => {
       try {
         const res = await fetch('https://goyalblogs-api.vercel.app/api/comment/getcomments?limit=5');
-        const data = await res.json();
+        const data = await res.json();``
         if (res.ok) {
           setComments(data.comments);
           setTotalComments(data.totalComments);
