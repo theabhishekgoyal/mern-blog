@@ -26,7 +26,7 @@ const app = express();
 
 // CORS configuration
 const corsOptions = {
-  origin:'https://goyalblog.vercel.app',         
+  origin:'http://localhost:5173',         
   credentials: true,  
 };
 
