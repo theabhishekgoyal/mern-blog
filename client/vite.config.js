@@ -6,9 +6,8 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://goyalblogs-api.vercel.app',
-        changeOrigin: true,
-        
+        target: 'http://localhost:3000',
+        secure: false,
       },
     },
   },

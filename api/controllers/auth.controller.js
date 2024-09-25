@@ -67,49 +67,49 @@ export const signin = async (req, res, next) => {
   }
 };
 
-export const google = async (req, res, next) => {
+/* GOOGLE AUTH */
+export const google = async (req, res) => {
   const { email, name, googlePhotoUrl } = req.body;
+
   try {
-    const user = await User.findOne({ email });
-    if (user) {
-      const token = jwt.sign(
-        { id: user._id, isAdmin: user.isAdmin },
-        process.env.JWT_SECRET
-      );
-      const { password, ...rest } = user._doc;
+    /* Check if user exists */
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      /* Generate JWT token */
+      const token = jwt.sign({ id: existingUser._id, isAdmin: existingUser.isAdmin }, process.env.JWT_SECRET);
+      const { password, ...userWithoutPassword } = existingUser._doc;
+
       res
         .status(200)
-        .cookie('access_token', token, {
-          httpOnly: true,
-        })
-        .json(rest);
+        .cookie("access_token", token, { httpOnly: true })
+        .json(userWithoutPassword);
     } else {
-      const generatedPassword =
-        Math.random().toString(36).slice(-8) +
-        Math.random().toString(36).slice(-8);
-      const hashedPassword = bcryptjs.hashSync(generatedPassword, 10);
+      /* Generate a random password */
+      const generatedPassword = Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8);
+      const hashedPassword = await bcryptjs.hash(generatedPassword, 10);
+
+      /* Create a new User */
       const newUser = new User({
-        username:
-          name.toLowerCase().split(' ').join('') +
-          Math.random().toString(9).slice(-4),
+        username: name.toLowerCase().split(" ").join("") + Math.random().toString(9).slice(-4),
         email,
         password: hashedPassword,
         profilePicture: googlePhotoUrl,
       });
+
+      /* Save the new User */
       await newUser.save();
-      const token = jwt.sign(
-        { id: newUser._id, isAdmin: newUser.isAdmin },
-        process.env.JWT_SECRET
-      );
-      const { password, ...rest } = newUser._doc;
+
+      /* Generate JWT token */
+      const token = jwt.sign({ id: newUser._id, isAdmin: newUser.isAdmin }, process.env.JWT_SECRET);
+      const { password, ...userWithoutPassword } = newUser._doc;
+
       res
         .status(200)
-        .cookie('access_token', token, {
-          httpOnly: true,
-        })
-        .json(rest);
+        .cookie("access_token", token, { httpOnly: true })
+        .json(userWithoutPassword);
     }
   } catch (error) {
-    next(error);
+    console.log(error);
+    res.status(500).json({ message: "Google authentication failed!", error: error.message });
   }
 };

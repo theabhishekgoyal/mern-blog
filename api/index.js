@@ -6,16 +6,11 @@ import authRoutes from './routes/auth.route.js';
 import postRoutes from './routes/post.route.js';
 import commentRoutes from './routes/comment.route.js';
 import cookieParser from 'cookie-parser';
-import path from 'path';
 import cors from 'cors';
+import path from 'path';
 
-// Initialize dotenv
 dotenv.config();
 
-// Initialize Express app
-const app = express();
-
-// Connect to MongoDB
 mongoose
   .connect(process.env.MONGO)
   .then(() => {
@@ -25,33 +20,43 @@ mongoose
     console.log(err);
   });
 
-// Configure CORS
-app.use(cors({
-  origin: 'https://goyalblog.vercel.app', // Adjust this based on your requirements
-  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Include all necessary HTTP methods
-  credentials: true,
-}));
+const __dirname = path.resolve();
 
-// Middleware
+const app = express();
+
+// CORS configuration
+const corsOptions = {
+  origin:'http://localhost:5173',         
+  credentials: true,  
+};
+
+// const corsOptions = {
+//   origin: process.env.NODE_ENV === 'production'
+//     ? 'https://goyalblog.vercel.app'  // Set your production domain here
+//     : 'http://localhost:3000',           // Allow localhost during development
+//   credentials: true,  // Enable passing credentials like cookies
+// };
+
+app.use(cors(corsOptions));
+
 app.use(express.json());
 app.use(cookieParser());
 
-// Routes
+app.listen(3000, () => {
+  console.log('Server is running on port 3000!');
+});
+
 app.use('/api/user', userRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/post', postRoutes);
 app.use('/api/comment', commentRoutes);
 
-// // Static files and SPA fallback
-// const __dirname = path.resolve();
-// app.use(express.static(path.join(__dirname, 'client', 'dist')));
+app.use(express.static(path.join(__dirname, '/client/dist')));
 
-// app.get('*', (req, res) => {
-//   res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
-// });
-app.get('', (req, res) => {
-  res.json({ message: 'Backend is working!' });
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
 });
+
 // Error handling middleware
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
@@ -61,9 +66,4 @@ app.use((err, req, res, next) => {
     statusCode,
     message,
   });
-});
-
-// Start the server
-app.listen(3000, () => {
-  console.log('Server is running on port 3000!');
 });

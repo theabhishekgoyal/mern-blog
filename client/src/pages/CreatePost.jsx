@@ -61,7 +61,7 @@ export default function CreatePost() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch('https://goyalblogs-api.vercel.app/api/post/create', {
+      const res = await fetch('/api/post/create', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -106,7 +106,14 @@ export default function CreatePost() {
             <option value='javascript'>JavaScript</option>
             <option value='reactjs'>React.js</option>
             <option value='nextjs'>Next.js</option>
-          </Select>
+            <option value='nodejs'>Node.js</option>
+            <option value='python'>Python</option>
+            <option value='java'>Java</option>
+            <option value='css'>CSS</option>
+            <option value='html'>HTML</option>
+            <option value='typescript'>TypeScript</option>
+            <option value='graphql'>GraphQL</option>
+            </Select>
         </div>
         <div className='flex gap-4 items-center justify-between border-4 border-teal-500 border-dotted p-3'>
           <FileInput
