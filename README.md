@@ -39,6 +39,6 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ## Contact
 
-Abhishek Goyal - [your email](mailto:agoyal0308@gmail.com)
+Abhishek Goyal - [My Email](mailto:agoyal0308@gmail.com)
 
 Project Link: [https://goyalblog.vercel.app/](https://goyalblog.vercel.app/)
