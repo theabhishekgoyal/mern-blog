@@ -37,7 +37,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/post', postRoutes);
 app.use('/api/comment', commentRoutes);
 
-app.get('/',(req,res)=>{
+app.get('/', (req, res) => {
   res.send({
     msg: "Connected to Backend successfully!"
   })
