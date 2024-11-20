@@ -11,12 +11,13 @@ import cors from 'cors';
 dotenv.config();
 
 mongoose
-  .connect(process.env.MONGO)
+  .connect(process.env.MONGO, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
-    console.log('MongoDb is connected');
+    console.log('MongoDB is connected');
   })
   .catch((err) => {
-    console.log(err);
+    console.error('MongoDB connection error:', err.message);
+    process.exit(1); // Exit the process if the database is not connected
   });
 
 
