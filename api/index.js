@@ -7,7 +7,6 @@ import postRoutes from './routes/post.route.js';
 import commentRoutes from './routes/comment.route.js';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
-// import path from 'path';
 
 dotenv.config();
 
@@ -20,24 +19,12 @@ mongoose
     console.log(err);
   });
 
-// const __dirname = path.resolve();
 
 const app = express();
 
-// CORS configuration
-const corsOptions = {
-  origin:'*',         
-  credentials: true,  
-};
 
-// const corsOptions = {
-//   origin: process.env.NODE_ENV === 'production'
-//     ? 'https://goyalblog.vercel.app'  // Set your production domain here
-//     : 'http://localhost:3000',           // Allow localhost during development
-//   credentials: true,  // Enable passing credentials like cookies
-// };
 
-app.use(cors(corsOptions));
+app.use(cors());
 
 app.use(express.json());
 app.use(cookieParser());
@@ -51,11 +38,11 @@ app.use('/api/auth', authRoutes);
 app.use('/api/post', postRoutes);
 app.use('/api/comment', commentRoutes);
 
-// app.use(express.static(path.join(__dirname, '/client/dist')));
-
-// app.get('*', (req, res) => {
-//   res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
-// });
+app.get('/',(req,res)=>{
+  res.send({
+    msg: "Connected to Backend successfully!"
+  })
+})
 
 // Error handling middleware
 app.use((err, req, res, next) => {
